@@ -5,6 +5,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 import { Login } from './src/screens/Login'
 import { Signup } from './src/screens/Signup'
 import { colors } from './src/constants/styles'
+import { Home } from './src/screens/Home'
 
 const Drawer = createDrawerNavigator()
 
@@ -14,6 +15,7 @@ export default function App() {
 			<Drawer.Navigator initialRouteName='Login'>
 				<Drawer.Screen name='Login' component={Login} />
 				<Drawer.Screen name='Signup' component={Signup} />
+				<Drawer.Screen name='Home' component={Home} />
 			</Drawer.Navigator>
 		</NavigationContainer>
 	)
