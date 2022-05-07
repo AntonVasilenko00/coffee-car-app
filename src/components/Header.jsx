@@ -8,10 +8,10 @@ import uuid from 'react-native-uuid'
 //generate array of 5 items with title
 const items = [
   {
-    title: 'Hot',
+    title: 'hot',
   },
   {
-    title: 'Iced',
+    title: 'iced',
   },
   // {
   //   title: 'Чай',
@@ -24,12 +24,18 @@ const items = [
   // },
 ]
 
-const Header = () => {
+const Header = ({ active, setActive }) => {
   return (
     <View style={styles.container}>
       {items.map((item, i) => (
-        <Pressable key={uuid.v4()}>
-          <Text style={[styles.item, i === 0 && styles.itemActive]}>
+        <Pressable
+          key={uuid.v4()}
+          style={{ width: '50%' }}
+          onPress={() => setActive(item.title)}
+        >
+          <Text
+            style={[styles.item, item.title === active && styles.itemActive]}
+          >
             {item.title}
           </Text>
         </Pressable>
@@ -50,9 +56,11 @@ const styles = StyleSheet.create({
   },
   item: {
     ...gStyles.text,
+    textTransform: 'capitalize',
     fontSize: 10,
     fontWeight: 'bold',
     padding: 10,
+    textAlign: 'center',
   },
   itemActive: {
     backgroundColor: colors.drawerBg,
