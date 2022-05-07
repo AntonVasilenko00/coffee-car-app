@@ -1,19 +1,23 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import { View, Pressable, Text, TextInput, StyleSheet, Button } from 'react-native'
 import Logo from '../components/Logo'
 import gStyles, { colors } from '../constants/styles'
 import {auth} from '../firebase';
 import {signInWithEmailAndPassword} from 'firebase/auth';
+import {UserContext} from '../../App';
 
 
 export const Login = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const context = useContext(UserContext)
 
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email,password).then(res=>{
-      if(res.user)
+      if(res.user){
+        context.setIsSignedIn(true)
         navigation.navigate('Home')
+      }
 
 
     }).catch(err=>alert(err.message))

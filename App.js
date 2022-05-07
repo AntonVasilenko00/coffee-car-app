@@ -1,23 +1,40 @@
 import 'react-native-gesture-handler'
 import { StyleSheet } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
-import { createDrawerNavigator } from '@react-navigation/drawer'
+import {createDrawerNavigator, DrawerItem} from '@react-navigation/drawer'
 import { Login } from './src/screens/Login'
+import { Logout } from './src/screens/Logout'
 import { Signup } from './src/screens/Signup'
-import { colors } from './src/constants/styles'
 import { Home } from './src/screens/Home'
+import {createContext, Context, useState, useEffect} from 'react';
+import {Button} from 'react-native-web';
 
 const Drawer = createDrawerNavigator()
 
-export default function App() {
+export const UserContext = createContext({})
+
+export default function App({navigation}) {
+  const [isSignedIn,setIsSignedIn] = useState(false)
+
 	return (
-		<NavigationContainer>
-			<Drawer.Navigator initialRouteName='Login'>
-				<Drawer.Screen name='Login' component={Login} />
-				<Drawer.Screen name='Signup' component={Signup} />
-				<Drawer.Screen name='Home' component={Home} />
-			</Drawer.Navigator>
-		</NavigationContainer>
+    <UserContext.Provider value={{isSignedIn,setIsSignedIn}}>
+      <NavigationContainer>
+        <Drawer.Navigator initialRouteName='Login'>
+          {isSignedIn ?
+              <>
+                <Drawer.Screen name='Home' component={Home} />
+                <Drawer.Screen name="Logout" component={Logout} />
+              </>
+              : <>
+                <Drawer.Screen name='Login' component={Login} />
+                <Drawer.Screen name='Signup' component={Signup} />
+              </>
+          }
+
+
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </UserContext.Provider>
 	)
 }
 
